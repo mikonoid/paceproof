@@ -1,0 +1,35 @@
+# Local development stack: `docker compose up --build`
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      ENVIRONMENT: development
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      DATABASE_URL: postgresql+psycopg://paceproof:paceproof@db:5432/paceproof
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: paceproof
+      POSTGRES_PASSWORD: paceproof
+      POSTGRES_DB: paceproof
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paceproof"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

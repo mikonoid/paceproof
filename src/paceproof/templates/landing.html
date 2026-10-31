@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>{{ _("Understand every run.") }}<br>{{ _("Prepare for every race.") }}</h1>
+  <p class="lead">
+    {{ _("Drop a .fit, .gpx or .tcx file and get a clear breakdown of your run — splits, heart-rate zones, aerobic decoupling and pace stability — with AI feedback that explains the why.") }}
+  </p>
+  <ul class="features">
+    <li>{{ _("Your original file is never stored.") }}</li>
+    <li>{{ _("Works with any watch that exports FIT, GPX or TCX.") }}</li>
+    <li>{{ _("Race Prep Planner — adaptive, explainable training plans — coming next.") }}</li>
+  </ul>
+  {% if invite_only %}
+  <p class="badge">{{ _("Private beta — invite only") }}</p>
+  {% endif %}
+</section>
+{% endblock %}
